@@ -42,8 +42,8 @@ namespace _prog1
                 {
                     chrome_exe = "google-chrome-stable";
                 }
-                Process.Start("cmd.exe", "/c copy lib app\\lib && copy localSaves.js app\\extensions");
-                Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "index.html';</script></body></html>\"");
+                Process.Start("cmd.exe", "/c \"mkdir app\\lib & copy lib app\\lib & copy localSaves.js app\\extensions\"");
+                Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.location='" + url + "index.html';</script></body></html>\"");
                 
                 fsRoute.BasePath = "app";
                 HttpServer httpServer = new HttpServer(port, new List<Route>()

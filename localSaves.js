@@ -31,7 +31,10 @@ utils.prototype.setLocalForage = function (key, value, successCallback, errorCal
         return;
     }
 
-    fs.writeFile('saves/'+core.firstData.name + "_" + key, JSON.stringify(value), 'utf-8',function (err, data) {
+    var str = JSON.stringify(value).replace(/[\u007F-\uFFFF]/g, function (chr) {
+        return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
+    });
+    fs.writeFile('saves/'+core.firstData.name + "_" + key, str, 'utf-8',function (err, data) {
         if (err) {
             if (errorCallback) errorCallback(err);
         }
