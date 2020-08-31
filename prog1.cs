@@ -37,8 +37,12 @@ namespace _prog1
 
             if (checkChrome())
             {
-
-                Process.Start("chrome.exe", "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "testprog1.html';</script></body></html>\"");
+                string chrome_exe = "chrome.exe";
+                if (platformCode()!=0)
+                {
+                    chrome_exe = "google-chrome-stable";
+                }
+                Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "testprog1.html';</script></body></html>\"");
                 
                 HttpServer httpServer = new HttpServer(port, new List<Route>()
                 {
@@ -82,6 +86,10 @@ namespace _prog1
 
         static private bool checkChrome()
         {
+            if (platformCode()!=0)
+            {
+                return true;
+            }
             RegistryKey browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet");
             if (browserKeys == null)
                 browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
@@ -92,6 +100,38 @@ namespace _prog1
                     return true;
             }
             return false;
+        }
+
+        static private int platformCode()
+        {
+            // https://stackoverflow.com/questions/38790802/determine-operating-system-in-net-core
+            string windir = Environment.GetEnvironmentVariable("windir");
+            if (!string.IsNullOrEmpty(windir) && windir.Contains(@"\") && Directory.Exists(windir))
+            {
+                return 0;
+            }
+            else if (File.Exists(@"/proc/sys/kernel/ostype"))
+            {
+                string osType = File.ReadAllText(@"/proc/sys/kernel/ostype");
+                if (osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Note: Android gets here too
+                    return 1;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            else if (File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
+            {
+                // Note: iOS gets here too
+                return 2;
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 
