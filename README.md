@@ -4,6 +4,8 @@
 
 > todo 更换prog1的名字
 
+> todo 如何不需要修改html直接把fs.js注入进去
+
 # Usage
 
 > 本节未完成,目前在主目录工作
@@ -35,7 +37,7 @@ buildprog1
 
 **linux**
 
-> todo 代码中根据平台走不同的分支
+> todo linux 分支的待完善
 
 [配置编译环境](linux_version.md)
 

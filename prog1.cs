@@ -102,6 +102,10 @@ namespace _prog1
             return false;
         }
 
+        // 0 win
+        // 1 linux
+        // 2 mac
+        // -1 unknown
         static private int platformCode()
         {
             // https://stackoverflow.com/questions/38790802/determine-operating-system-in-net-core
