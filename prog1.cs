@@ -31,7 +31,7 @@ namespace _prog1
         static void Main(string[] args)
         {
 
-            int port = 1055;
+            int port = 1056;
             while (portInUse(port)) port++;
             string url = "http://127.0.0.1:" + port + "/";
 
@@ -42,15 +42,15 @@ namespace _prog1
                 {
                     chrome_exe = "google-chrome-stable";
                 }
-                Process.Start("cmd.exe", "/c \"mkdir app\\lib & copy lib app\\lib & copy localSaves.js app\\extensions\"");
+                // Process.Start("cmd.exe", "/c \"mkdir app\\lib & copy lib app\\lib & copy localSaves.js app\\extensions\"");
                 Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.location='" + url + "index.html';</script></body></html>\"");
                 
-                fsRoute.BasePath = "app";
+                fsRoute.BasePath = ".";
                 HttpServer httpServer = new HttpServer(port, new List<Route>()
                 {
                     new Route()
                     {
-                        Callable = new FileSystemRouteHandler() {BasePath = "app", ShowDirectories = true}.Handle,
+                        Callable = new FileSystemRouteHandler() {BasePath = ".", ShowDirectories = true}.Handle,
                         UrlRegex = "^/(.*)$",
                         Method = "GET"
                     },
