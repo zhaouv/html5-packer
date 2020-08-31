@@ -42,7 +42,7 @@ namespace _prog1
                 {
                     chrome_exe = "google-chrome-stable";
                 }
-                Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "testprog1.html';</script></body></html>\"");
+                Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "app/index.html';</script></body></html>\"");
                 
                 HttpServer httpServer = new HttpServer(port, new List<Route>()
                 {

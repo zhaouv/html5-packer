@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate" translate="no">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate" />
+    <title>Document</title>
+    <script src="/lib/fs.js"></script>
+</head>
+
+<body>
+    <div>
+        测试fs <a href="#" onclick="testfs()">run</a><br>
+        测试关闭app窗口的同时关闭server, 同时F5刷新不关闭
+    </div>
+    <script>
+        function testfs(params) {
+    fs.writeFile('_test.txt', '123中a文bc', 'utf-8', function (e, d) {
+        console.log(e, d);
+    })
+    setTimeout(function () {
+        fs.writeFile('_test_bin.txt', 'abc=', 'base64', function (e, d) {
+            console.log(e, d);
+        })
+    }, 100);
+    setTimeout(function () {
+        fs.readFile('_test.txt', 'utf-8', function (e, d) {
+            console.log(e, d);
+        })
+    }, 200);
+    setTimeout(function () {
+        fs.readFile('_test_bin.txt', 'base64', function (e, d) {
+            console.log(e, d);
+        })
+    }, 300);
+    setTimeout(function () {
+        fs.readdir('.', function (e, d) {
+            console.log(e, d);
+        })
+    }, 400);
+    setTimeout(function () {
+        fs.writeMultiFiles(['_test.txt','_test_multi.txt'], ['abc=','abe='], function (e, d) {
+            console.log(e, d);
+        })
+    }, 500);
+    setTimeout(function () {
+        fs.mkdir('__test__', function (e, d) {
+            console.log(e, d);
+        })
+    }, 600);
+    setTimeout(function () {
+        fs.moveFile('_test_bin.txt', '__test__/_test_bin.txt', function (e, d) {
+            console.log(e, d);
+        })
+    }, 700);
+    setTimeout(function () {
+        fs.moveFile('_test.txt', '__test__/_test.txt', function (e, d) {
+            console.log(e, d);
+        })
+    }, 800);
+    setTimeout(function () {
+        fs.moveFile('_test_multi.txt', '__test__/_test_multi.txt', function (e, d) {
+            console.log(e, d);
+        })
+    }, 900);
+    setTimeout(function () {
+        fs.deleteFile('__test__/_test_bin.txt', function (e, d) {
+            console.log(e, d);
+        })
+    }, 1000);
+    setTimeout(function () {
+        fs.deleteFile('__test__', function (e, d) {
+            console.log(e, d);
+        })
+    }, 1100);
+        }
+    </script>
+</body>
+
+</html>

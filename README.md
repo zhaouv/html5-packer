@@ -1,6 +1,6 @@
 # HTML5 Packer
 
-借助浏览器, 额外提供fs, 把html5应用伪装成桌面app
+借助浏览器, 额外提供fs, 把单网页html5应用伪装成桌面app
 
 > todo 更换prog1的名字
 
@@ -10,17 +10,19 @@
 
 > 本节未完成,目前在主目录工作
 
-把html5应用放在`./app`中, 并配置xxx
+下载release或build后保留`app.exe lib/ app/`
 
-配置..
+把单网页html5应用放在`./app`中 (默认入口是index.html)
+
+**需要在\<head\>最开始处放置`<script src="/lib/fs.js"></script>`**
 
 程序图标..
 
 网页图标由网页的 shortcut icon (favicon.ico) 决定
 
-win:双击prog1.exe启动 
+win:双击app.exe启动 
 
-linux:[配置环境](linux_version.md) mono prog1.exe 或者双击启动(?需要chmod 755 prog1.exe)
+linux:[配置环境](linux_version.md) mono app.exe 或者双击启动(?需要chmod 755 app.exe)
 
 
 
@@ -32,7 +34,7 @@ linux:[配置环境](linux_version.md) mono prog1.exe 或者双击启动(?需要
 
 ```
 loadenv
-buildprog1
+buildapp
 ```
 
 **linux**
@@ -42,6 +44,6 @@ buildprog1
 [配置编译环境](linux_version.md)
 
 ```
-bash buildprog1.cmd
+bash buildapp.cmd
 ```
 
