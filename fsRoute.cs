@@ -11,6 +11,7 @@ namespace _prog1
 {
     class fsRoute
     {
+        public static string BasePath = ".";
         private static int exitMark=1;
 
         public static HttpResponse route(HttpRequest request)
@@ -85,7 +86,7 @@ namespace _prog1
             string type = dictionary["type"];
             if (type == null || !type.Equals("base64")) type = "utf8";
             string filename = dictionary["name"];
-            if (filename == null || !File.Exists(filename))
+            if (filename == null || !File.Exists(Path.Combine(BasePath, filename)))
             {
                 return new HttpResponse()
                 {
@@ -94,7 +95,7 @@ namespace _prog1
                     ReasonPhrase = "Not found"
                 };
             }
-            byte[] bytes = File.ReadAllBytes(filename);
+            byte[] bytes = File.ReadAllBytes(Path.Combine(BasePath, filename));
             return new HttpResponse()
             {
                 ContentAsUTF8 = type=="base64"?Convert.ToBase64String(bytes):Encoding.UTF8.GetString(bytes),
@@ -113,7 +114,7 @@ namespace _prog1
                 bytes = Convert.FromBase64String(content);
             else
                 bytes = Encoding.UTF8.GetBytes(content);
-            File.WriteAllBytes(filename, bytes);
+            File.WriteAllBytes(Path.Combine(BasePath, filename), bytes);
             return new HttpResponse()
             {
                 ContentAsUTF8 = Convert.ToString(bytes.Length),
@@ -133,7 +134,7 @@ namespace _prog1
                 if (i >= contents.Length) continue;
                 byte[] bytes = Convert.FromBase64String(contents[i]);
                 length += bytes.LongLength;
-                File.WriteAllBytes(filenames[i], bytes);
+                File.WriteAllBytes(Path.Combine(BasePath, filenames[i]), bytes);
             }
 
             return new HttpResponse()
@@ -147,7 +148,7 @@ namespace _prog1
         private static HttpResponse listFileHandler(Dictionary<string, string> dictionary)
         {
             string name = dictionary["name"];
-            if (name == null || !Directory.Exists(name))
+            if (name == null || !Directory.Exists(Path.Combine(BasePath, name)))
             {
                 return new HttpResponse()
                 {
@@ -156,7 +157,7 @@ namespace _prog1
                     ReasonPhrase = "Not found"
                 };
             }
-            string[] filenames = Directory.GetFiles(name);
+            string[] filenames = Directory.GetFiles(Path.Combine(BasePath, name));
             for (int i = 0; i < filenames.Length; i++) filenames[i] = "\"" + Path.GetFileName(filenames[i]) + "\"";
             string content = "[" + string.Join(", ", filenames) + "]";
             //Console.WriteLine(content);
@@ -171,7 +172,7 @@ namespace _prog1
         private static HttpResponse makeDirHandler(Dictionary<string, string> dictionary)
         {
             string name = dictionary["name"];
-            if (Directory.Exists(name))
+            if (Directory.Exists(Path.Combine(BasePath, name)))
             {
                 return new HttpResponse()
                 {
@@ -180,7 +181,7 @@ namespace _prog1
                     ReasonPhrase = "OK"
                 };
             }
-            Directory.CreateDirectory(name);
+            Directory.CreateDirectory(Path.Combine(BasePath, name));
             return new HttpResponse()
             {
                 ContentAsUTF8 = "Make Directory Success",
@@ -193,7 +194,7 @@ namespace _prog1
         {
             string src = dictionary["src"];
             string dest = dictionary["dest"];
-            if (src == null || !File.Exists(src))
+            if (src == null || !File.Exists(Path.Combine(BasePath, src)))
             {
                 return new HttpResponse()
                 {
@@ -211,7 +212,7 @@ namespace _prog1
                     ReasonPhrase = "Not found"
                 };
             }
-            File.Move(src, dest);
+            File.Move(Path.Combine(BasePath, src), Path.Combine(BasePath, dest));
             return new HttpResponse()
             {
                 ContentAsUTF8 = "Move Success",
@@ -239,7 +240,7 @@ namespace _prog1
         private static HttpResponse deleteFileHandler(Dictionary<String, String> dictionary)
         {
             string filename = dictionary["name"];
-            if (filename == null || !(File.Exists(filename) || Directory.Exists(filename)))
+            if (filename == null || !(File.Exists(Path.Combine(BasePath, filename)) || Directory.Exists(Path.Combine(BasePath, filename))))
             {
                 return new HttpResponse()
                 {
@@ -248,7 +249,7 @@ namespace _prog1
                     ReasonPhrase = "Not found"
                 };
             }
-            deleteFile(filename);
+            deleteFile(Path.Combine(BasePath, filename));
             return new HttpResponse()
             {
                 ContentAsUTF8 = "Delete Success",
