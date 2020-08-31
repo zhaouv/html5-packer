@@ -21,3 +21,4 @@ https://www.jianshu.com/p/6314f6095658
 start chrome --profile-directory="Default" --app="data:text/html,<html><body><script>window.moveTo(20,20);window.resizeTo(800,600);window.location='http://zhaouv.net';</script></body></html>"
 ```
 
+server from https://github.com/jeske/SimpleHttpServer public domain
