@@ -48,7 +48,7 @@ namespace _prog1
                 {
                     new Route()
                     {
-                        Callable = new FileSystemRouteHandler() {BasePath = ".", ShowDirectories = true}.Handle,
+                        Callable = new FileSystemRouteHandler() {BasePath = "app", ShowDirectories = true}.Handle,
                         UrlRegex = "^/(.*)$",
                         Method = "GET"
                     },
