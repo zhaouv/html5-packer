@@ -30,9 +30,11 @@ csharp windows自带运行时, 来作为server(用c做server也是可行的, 区
 
 网页图标由网页的 shortcut icon (favicon.ico) 决定
 
-win:双击app.exe启动 
+Windows: 双击app.exe启动 
 
-linux:mono app.exe（[需要安装mono全家桶](linux_version.md)）
+Windows 8及以上可直接运行本软件，Windows 7需要安装.Net Framework 4.0. [微软下载界面](https://dotnet.microsoft.com/download/dotnet-framework/net40)
+
+Linux: mono app.exe（[需要安装mono全家桶](linux_version.md)）
 
 
 
