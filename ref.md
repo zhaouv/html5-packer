@@ -22,3 +22,14 @@ start chrome --profile-directory="Default" --app="data:text/html,<html><body><sc
 ```
 
 server from https://github.com/jeske/SimpleHttpServer public domain
+
+
+Process.Start("xdg-open", "https://www.google.com");
+
+如果想改成不只是监听localhost,改[这里](SimpleHttpServer/HttpServer.cs#L44)
+Int32 port = 13000;
+IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+
+// TcpListener server = new TcpListener(port);
+server = new TcpListener(localAddr, port);
+
