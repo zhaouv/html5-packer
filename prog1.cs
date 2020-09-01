@@ -34,14 +34,16 @@ namespace _prog1
             int port = 1055;
             while (portInUse(port)) port++;
             string url = "http://127.0.0.1:" + port + "/";
+            string platform = getPlatform();
 
             if (checkChrome())
             {
                 string chrome_exe = "chrome.exe";
-                if (platformCode()!=0)
+                if (platform == "Linux")
                 {
                     chrome_exe = "google-chrome-stable";
                 }
+                
                 Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "app/index.html';</script></body></html>\"");
                 
                 fsRoute.BasePath = ".";
@@ -69,6 +71,20 @@ namespace _prog1
             else 
             {
                 MessageBox.Show("需要安装Chrome浏览器", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("现在尝试启动默认浏览器", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if (platform == "Windows")
+                {
+                    Process.Start("https://www.google.com");
+                }
+                else if (platform == "Linux")
+                {
+                    Process.Start("xdg-open", "https://www.google.com");
+                }
+                // TODO
+                else {
+                    MessageBox.Show("TODO: Mac?", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                
             }
         }
         
@@ -87,33 +103,38 @@ namespace _prog1
 
         static private bool checkChrome()
         {
-            if (platformCode()!=0)
+            string platform = getPlatform();
+
+            if (platform == "Windows")
             {
-                return true;
+                RegistryKey browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet");
+                if (browserKeys == null)
+                    browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
+                string[] names = browserKeys.GetSubKeyNames();
+                foreach (string name in names)
+                {
+                    if (name.ToLower().Contains("chrome"))
+                        return true;
+                }
+                return false;
             }
-            RegistryKey browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Clients\StartMenuInternet");
-            if (browserKeys == null)
-                browserKeys = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Clients\StartMenuInternet");
-            string[] names = browserKeys.GetSubKeyNames();
-            foreach (string name in names)
+
+            else if (platform == "Linux")
             {
-                if (name.ToLower().Contains("chrome"))
-                    return true;
+                string result = execShell("google-chrome-stable --version");
+                if (result.Contains("Google Chrome")) return true;
             }
             return false;
         }
 
-        // 0 win
-        // 1 linux
-        // 2 mac
-        // -1 unknown
-        static private int platformCode()
+
+        static private string getPlatform()
         {
             // https://stackoverflow.com/questions/38790802/determine-operating-system-in-net-core
             string windir = Environment.GetEnvironmentVariable("windir");
             if (!string.IsNullOrEmpty(windir) && windir.Contains(@"\") && Directory.Exists(windir))
             {
-                return 0;
+                return "Windows";
             }
             else if (File.Exists(@"/proc/sys/kernel/ostype"))
             {
@@ -121,22 +142,41 @@ namespace _prog1
                 if (osType.StartsWith("Linux", StringComparison.OrdinalIgnoreCase))
                 {
                     // Note: Android gets here too
-                    return 1;
+                    return "Linux";
                 }
                 else
                 {
-                    return -1;
+                    return "Unknown";
                 }
             }
             else if (File.Exists(@"/System/Library/CoreServices/SystemVersion.plist"))
             {
                 // Note: iOS gets here too
-                return 2;
+                return "Mac";
             }
             else
             {
-                return -1;
+                return "Unknown";
             }
+        }
+
+        static private string execShell(string cmd)
+        {
+            var process = new Process()
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash",
+                    Arguments = cmd,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+            process.Start();
+            string result = process.StandardOutput.ReadToEnd();
+            process.WaitForExit();
+            return result;
         }
     }
 
