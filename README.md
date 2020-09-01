@@ -1,6 +1,6 @@
 # HTML5 Packer
 
-借助浏览器, 额外提供fs, 把单网页html5应用伪装成桌面app
+借助浏览器, 额外提供[fs](https://github.com/zhaouv/html5-packer/issues/1), 把单网页html5应用伪装成桌面app
 
 适合场景: 轻量级的需要文件系统和GUI界面的程序
 
@@ -32,7 +32,7 @@ csharp windows自带运行时, 来作为server(用c做server也是可行的, 区
 
 Windows: 双击app.exe启动 
 
-Windows 8及以上可直接运行本软件，Windows 7需要安装.Net Framework 4.0. [微软下载界面](https://dotnet.microsoft.com/download/dotnet-framework/net40)
+Windows 8及以上可直接运行本软件，Windows 7需要安装.Net Framework [微软下载界面](https://dotnet.microsoft.com/download/dotnet-framework)
 
 Linux: mono app.exe（[需要安装mono全家桶](linux_version.md)）
 
