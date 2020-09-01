@@ -32,7 +32,7 @@ csharp windows自带运行时, 来作为server(用c做server也是可行的, 区
 
 win:双击app.exe启动 
 
-linux:[配置环境](linux_version.md) mono app.exe 或者双击启动(?需要chmod 755 app.exe)
+linux:mono app.exe（[需要安装mono全家桶](linux_version.md)）
 
 
 
