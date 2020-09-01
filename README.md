@@ -22,7 +22,9 @@ csharp windows自带运行时, 来作为server(用c做server也是可行的, 区
 
 把单网页html5应用放在`./app`中 (默认入口是index.html)
 
-**需要在\<head\>最开始处放置`<script src="/lib/fs.js"></script>`**
+**需要在\<head\>最开始处放置`<script src="/lib/fs.js"></script>`**  
+否则程序会3分钟内自动关闭  
+(毕竟是纯后台的服务, 小白不一定知道怎么关, 点x时同时关闭服务的脚本在/lib/fs.js里)  
 
 程序图标..
 

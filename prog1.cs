@@ -47,6 +47,7 @@ namespace _prog1
                 Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "app/index.html';</script></body></html>\"");
                 
                 fsRoute.BasePath = ".";
+                fsRoute.delayExit(3*60*1000); // close if no connecting in 3 min
                 HttpServer httpServer = new HttpServer(port, new List<Route>()
                 {
                     new Route()

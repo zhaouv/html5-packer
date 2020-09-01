@@ -14,6 +14,16 @@ namespace _prog1
         public static string BasePath = ".";
         private static int exitMark=1;
 
+        public static int delayExit(int time){
+            int thismark = ++exitMark;
+            Task.Run(async ()=>
+            {
+                await Task.Delay(time);
+                if (thismark==exitMark)System.Environment.Exit(0);
+            });
+            return thismark;
+        }
+
         public static HttpResponse route(HttpRequest request)
         {
             // Console.WriteLine(request.Content);
@@ -34,12 +44,7 @@ namespace _prog1
 
             if (request.Path.StartsWith("exitProg"))
             {
-                int thismark = ++exitMark;
-                Task.Run(async ()=>
-                {
-                    await Task.Delay(3000);
-                    if (thismark==exitMark)System.Environment.Exit(0);
-                });
+                delayExit(3000);
                 return new HttpResponse()
                 {
                     ContentAsUTF8 = "exitProg set.",
