@@ -16,64 +16,26 @@
     </div>
     <script>
         function testfs(params) {
-    fs.writeFile('_test.txt', '123中a文bc', 'utf-8', function (e, d) {
-        console.log(e, d);
-    })
-    setTimeout(function () {
-        fs.writeFile('_test_bin.txt', 'abc=', 'base64', function (e, d) {
-            console.log(e, d);
-        })
-    }, 100);
-    setTimeout(function () {
-        fs.readFile('_test.txt', 'utf-8', function (e, d) {
-            console.log(e, d);
-        })
-    }, 200);
-    setTimeout(function () {
-        fs.readFile('_test_bin.txt', 'base64', function (e, d) {
-            console.log(e, d);
-        })
-    }, 300);
-    setTimeout(function () {
-        fs.readdir('.', function (e, d) {
-            console.log(e, d);
-        })
-    }, 400);
-    // setTimeout(function () {
-    //     fs.writeMultiFiles(['_test.txt','_test_multi.txt'], ['abc=','abe='], function (e, d) {
-    //         console.log(e, d);
-    //     })
-    // }, 500);
-    // setTimeout(function () {
-    //     fs.mkdir('__test__', function (e, d) {
-    //         console.log(e, d);
-    //     })
-    // }, 600);
-    // setTimeout(function () {
-    //     fs.moveFile('_test_bin.txt', '__test__/_test_bin.txt', function (e, d) {
-    //         console.log(e, d);
-    //     })
-    // }, 700);
-    // setTimeout(function () {
-    //     fs.moveFile('_test.txt', '__test__/_test.txt', function (e, d) {
-    //         console.log(e, d);
-    //     })
-    // }, 800);
-    // setTimeout(function () {
-    //     fs.moveFile('_test_multi.txt', '__test__/_test_multi.txt', function (e, d) {
-    //         console.log(e, d);
-    //     })
-    // }, 900);
-    // setTimeout(function () {
-    //     fs.deleteFile('__test__/_test_bin.txt', function (e, d) {
-    //         console.log(e, d);
-    //     })
-    // }, 1000);
-    // setTimeout(function () {
-    //     fs.deleteFile('__test__', function (e, d) {
-    //         console.log(e, d);
-    //     })
-    // }, 1100);
+            var ti=0;
+            var td=100;
+            var testi = (func,arr)=>setTimeout(function () {func.apply(fs,arr)}, (ti++)*td);
+            var cb2 = (err,data)=>console.log(err, data);
+
+            testi(fs.writeFile,['_test.txt', '123中a文bc', 'utf-8', cb2]);
+            testi(fs.writeFile,['_test_bin.txt', 'abc=', 'base64', cb2]);
+            testi(fs.readFile,['_test.txt', 'utf-8', cb2]);
+            testi(fs.readFile,['_test_bin.txt', 'base64', cb2]);
+            testi(fs.unstandard.listFile,['.', cb2]);
+            testi(fs.readdir,['.', cb2]);
+            testi(fs.readdir,['.', {withFileTypes:true}, cb2]);
+            testi(fs.unstandard.writeMultiFiles,[['_test_bin.txt','_test_multi.txt'], ['abc=','abe='], 'base64', cb2]);
+            // testi(fs.mkdir,['__test__', cb2]);
+            // testi(fs.moveFile,['_test_bin.txt', '__test__/_test_bin.txt', cb2]);
+            // testi(fs.moveFile,['_test.txt', '__test__/_test.txt', cb2]);
+            // testi(fs.moveFile,['_test_multi.txt', '__test__/_test_multi.txt', cb2]);
+            // testi(fs.deleteFile,['__test__/_test_bin.txt', cb2]);
+            // testi(fs.deleteFile,['__test__', cb2]);
+
         }
     </script>
 </body>
