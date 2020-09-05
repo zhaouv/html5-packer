@@ -68,6 +68,8 @@ bash buildapp.cmd
 
 > 准备提供的函数 未做完
 
+网页没有Buffer类, 直接以字符串作为结果
+
 ```js
 fs.readFile
 fs.readFileSync
@@ -85,6 +87,10 @@ fs.unlink
 fs.unlinkSync
 fs.rmdir
 fs.rmdirSync
+
+fs.unstandard.encode64
+fs.unstandard.decode64
+fs.unstandard.writeMultiFiles
 ```
 
 
