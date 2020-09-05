@@ -59,3 +59,32 @@ buildapp
 bash buildapp.cmd
 ```
 
+# fs
+ 
+提供fs.js  
+仿照nodejs的api提供一些函数  
+暂时不以require('fs')来提供fs, 而是直接作为全局变量  
+借助 XMLHttpRequest 实现  
+
+> 准备提供的函数 未做完
+
+```js
+fs.readFile
+fs.readFileSync
+fs.writeFile
+fs.writeFileSync
+fs.appendFile
+fs.appendFileSync
+fs.readdir
+fs.readdirSync
+fs.mkdir
+fs.mkdirSync
+fs.rename
+fs.renameSync
+fs.unlink
+fs.unlinkSync
+fs.rmdir
+fs.rmdirSync
+```
+
+

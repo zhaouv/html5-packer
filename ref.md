@@ -33,3 +33,7 @@ IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 // TcpListener server = new TcpListener(port);
 server = new TcpListener(localAddr, port);
 
+parse ini  
+https://stackoverflow.com/questions/217902/reading-writing-an-ini-file  
+https://github.com/rickyah/ini-parser  
+https://www.codeproject.com/Tips/771772/A-Simple-and-Efficient-INI-File-Reader-in-Csharp  
