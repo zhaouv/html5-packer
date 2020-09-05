@@ -64,8 +64,8 @@ namespace _prog1
             if (request.Path.StartsWith("writeMultiFiles"))
                 return writeMultiFilesHandler(dictionary);
 
-            if (request.Path.StartsWith("listFile"))
-                return listFileHandler(dictionary);
+            if (request.Path.StartsWith("readdir"))
+                return readdirHandler(dictionary);
 
             if (request.Path.StartsWith("makeDir"))
                 return makeDirHandler(dictionary);
@@ -150,7 +150,7 @@ namespace _prog1
             };
         }
 
-        private static HttpResponse listFileHandler(Dictionary<string, string> dictionary)
+        private static HttpResponse readdirHandler(Dictionary<string, string> dictionary)
         {
             string name = dictionary["name"];
             if (name == null || !Directory.Exists(Path.Combine(BasePath, name)))
@@ -162,9 +162,20 @@ namespace _prog1
                     ReasonPhrase = "Not found"
                 };
             }
+            
+            string content = "[[";
+
             string[] filenames = Directory.GetFiles(Path.Combine(BasePath, name));
             for (int i = 0; i < filenames.Length; i++) filenames[i] = "\"" + Path.GetFileName(filenames[i]) + "\"";
-            string content = "[" + string.Join(", ", filenames) + "]";
+            content += string.Join(", ", filenames);
+
+            content += "],[";
+
+            string[] dirnames = Directory.GetDirectories(Path.Combine(BasePath, name));
+            for (int i = 0; i < dirnames.Length; i++) dirnames[i] = "\"" + Path.GetFileName(dirnames[i]) + "\"";
+            content += string.Join(", ", dirnames);
+
+            content += "]]";
             //Console.WriteLine(content);
             return new HttpResponse()
             {

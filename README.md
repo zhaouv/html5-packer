@@ -75,8 +75,6 @@ fs.readFile
 fs.readFileSync
 fs.writeFile
 fs.writeFileSync
-fs.appendFile
-fs.appendFileSync
 fs.readdir
 fs.readdirSync
 fs.mkdir
@@ -90,7 +88,8 @@ fs.rmdirSync
 
 fs.unstandard.encode64
 fs.unstandard.decode64
-fs.unstandard.writeMultiFiles
+fs.unstandard.writeMultiFiles // 同writeFile, 但是一次写入多个文件
+fs.unstandard.listFile // 列出所有文件和目录 data=[[files],[subdirs]]
 ```
 
 

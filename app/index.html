@@ -39,41 +39,41 @@
             console.log(e, d);
         })
     }, 400);
-    setTimeout(function () {
-        fs.writeMultiFiles(['_test.txt','_test_multi.txt'], ['abc=','abe='], function (e, d) {
-            console.log(e, d);
-        })
-    }, 500);
-    setTimeout(function () {
-        fs.mkdir('__test__', function (e, d) {
-            console.log(e, d);
-        })
-    }, 600);
-    setTimeout(function () {
-        fs.moveFile('_test_bin.txt', '__test__/_test_bin.txt', function (e, d) {
-            console.log(e, d);
-        })
-    }, 700);
-    setTimeout(function () {
-        fs.moveFile('_test.txt', '__test__/_test.txt', function (e, d) {
-            console.log(e, d);
-        })
-    }, 800);
-    setTimeout(function () {
-        fs.moveFile('_test_multi.txt', '__test__/_test_multi.txt', function (e, d) {
-            console.log(e, d);
-        })
-    }, 900);
-    setTimeout(function () {
-        fs.deleteFile('__test__/_test_bin.txt', function (e, d) {
-            console.log(e, d);
-        })
-    }, 1000);
-    setTimeout(function () {
-        fs.deleteFile('__test__', function (e, d) {
-            console.log(e, d);
-        })
-    }, 1100);
+    // setTimeout(function () {
+    //     fs.writeMultiFiles(['_test.txt','_test_multi.txt'], ['abc=','abe='], function (e, d) {
+    //         console.log(e, d);
+    //     })
+    // }, 500);
+    // setTimeout(function () {
+    //     fs.mkdir('__test__', function (e, d) {
+    //         console.log(e, d);
+    //     })
+    // }, 600);
+    // setTimeout(function () {
+    //     fs.moveFile('_test_bin.txt', '__test__/_test_bin.txt', function (e, d) {
+    //         console.log(e, d);
+    //     })
+    // }, 700);
+    // setTimeout(function () {
+    //     fs.moveFile('_test.txt', '__test__/_test.txt', function (e, d) {
+    //         console.log(e, d);
+    //     })
+    // }, 800);
+    // setTimeout(function () {
+    //     fs.moveFile('_test_multi.txt', '__test__/_test_multi.txt', function (e, d) {
+    //         console.log(e, d);
+    //     })
+    // }, 900);
+    // setTimeout(function () {
+    //     fs.deleteFile('__test__/_test_bin.txt', function (e, d) {
+    //         console.log(e, d);
+    //     })
+    // }, 1000);
+    // setTimeout(function () {
+    //     fs.deleteFile('__test__', function (e, d) {
+    //         console.log(e, d);
+    //     })
+    // }, 1100);
         }
     </script>
 </body>
