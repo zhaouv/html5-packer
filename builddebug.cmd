@@ -1,0 +1,1 @@
+csc -out:debug.exe prog1.cs fsRoute.cs SimpleHttpServer/*.cs SimpleHttpServer/Models/*.cs SimpleHttpServer/RouteHandlers/*.cs

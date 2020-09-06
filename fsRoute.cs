@@ -210,11 +210,11 @@ namespace _prog1
         {
             string src = dictionary["src"];
             string dest = dictionary["dest"];
-            if (src == null || !File.Exists(Path.Combine(BasePath, src)))
+            if (src == null || (!File.Exists(Path.Combine(BasePath, src)) && !Directory.Exists(Path.Combine(BasePath, src))))
             {
                 return new HttpResponse()
                 {
-                    ContentAsUTF8 = "File Not Exists!",
+                    ContentAsUTF8 = "Path Not Exists!",
                     StatusCode = "404",
                     ReasonPhrase = "Not found"
                 };
@@ -228,7 +228,14 @@ namespace _prog1
                     ReasonPhrase = "Not found"
                 };
             }
-            File.Move(Path.Combine(BasePath, src), Path.Combine(BasePath, dest));
+            if (!Directory.Exists(Path.Combine(BasePath, src)))
+            {
+                File.Move(Path.Combine(BasePath, src), Path.Combine(BasePath, dest));
+            }
+            else
+            {
+                Directory.Move(Path.Combine(BasePath, src), Path.Combine(BasePath, dest));
+            }
             return new HttpResponse()
             {
                 ContentAsUTF8 = "Move Success",

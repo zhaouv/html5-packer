@@ -31,13 +31,13 @@
             testi(fs.readdir, ['.', { withFileTypes: true }, cb2]);
             testi(fs.unstandard.writeMultiFiles, [['_test_bin.txt', '_test_multi.txt'], ['abc=', 'abe='], 'base64', cb2]);
             testi(fs.mkdir, ['__test__', cb2]);
-            testi(fs.mkdirSync, ['__test__2']);
-            testi(fs.rename, ['_test_bin.txt', '__test__/_test_bin.txt', cb2]);
-            // testi(fs.renameSync, ['__test__2', '__test__/dir']);
+            testi(fs.mkdirSync, ['__test__2/p/a/b/c']);
+            testi(fs.renameSync, ['_test_bin.txt', '__test__/_test_bin.txt']);
+            testi(fs.rename, ['__test__2', '__test__/dir', cb2]);
             testi(fs.rename, ['_test.txt', '__test__/_test.txt', cb2]);
             testi(fs.renameSync, ['_test_multi.txt', '__test__/_test_multi.txt']);
             testi(fs.unlinkSync, ['__test__/_test_bin.txt']);
-            // testi(fs.rmdir, ['__test__', cb2]);
+            testi(fs.rmdir, ['__test__', cb2]);
 
         }
     </script>
