@@ -71,25 +71,26 @@ bash buildapp.cmd
 网页没有Buffer类, 直接以字符串作为结果
 
 ```js
-fs.readFile
+fs.readFile         // 内容 encoding 仅支持 utf8 和 base64, 文件名 encoding 不允许调整, 下略
 fs.readFileSync
 fs.writeFile
 fs.writeFileSync
 fs.readdir
 fs.readdirSync
-fs.mkdir
+fs.mkdir            // 无论如何设置 options, 总是使用 { recursive: true }
 fs.mkdirSync
 fs.rename
 fs.renameSync
-fs.unlink
+fs.unlink           // unlink 和 rmdir 均以 { recursive: true } 来移除文件和目录
 fs.unlinkSync
 fs.rmdir
 fs.rmdirSync
 
 fs.unstandard.encode64
 fs.unstandard.decode64
-fs.unstandard.writeMultiFiles // 同writeFile, 但是一次写入多个文件
-fs.unstandard.listFile // 列出所有文件和目录 data=[[files],[subdirs]]
+fs.unstandard.writeMultiFiles   // 类似writeFile, 但是一次写入多个文件
+fs.unstandard.listFile          // 类似readdir, 列出所有文件和目录, data=[[files],[subdirs]]
+fs.unstandard.deleteFile        // 递归的移除文件和目录
 ```
 
 

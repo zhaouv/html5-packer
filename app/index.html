@@ -16,25 +16,28 @@
     </div>
     <script>
         function testfs(params) {
-            var ti=0;
-            var td=100;
-            var testi = (func,arr)=>setTimeout(function () {func.apply(fs,arr)}, (ti++)*td);
-            var cb2 = (err,data)=>console.log(err, data);
+            var ti = 0;
+            var td = 100;
+            var testi = (func, arr) => setTimeout(function () { var o = func.apply(fs, arr); o && console.log(o) }, (ti++) * td);
+            // var testi = (func,arr)=>(function () {var o=func.apply(fs,arr);o&&console.log(o);return o})();
+            var cb2 = (err, data) => console.log(err, data);
 
-            testi(fs.writeFile,['_test.txt', '123中a文bc', 'utf-8', cb2]);
-            testi(fs.writeFile,['_test_bin.txt', 'abc=', 'base64', cb2]);
-            testi(fs.readFile,['_test.txt', 'utf-8', cb2]);
-            testi(fs.readFile,['_test_bin.txt', 'base64', cb2]);
-            testi(fs.unstandard.listFile,['.', cb2]);
-            testi(fs.readdir,['.', cb2]);
-            testi(fs.readdir,['.', {withFileTypes:true}, cb2]);
-            testi(fs.unstandard.writeMultiFiles,[['_test_bin.txt','_test_multi.txt'], ['abc=','abe='], 'base64', cb2]);
-            // testi(fs.mkdir,['__test__', cb2]);
-            // testi(fs.moveFile,['_test_bin.txt', '__test__/_test_bin.txt', cb2]);
-            // testi(fs.moveFile,['_test.txt', '__test__/_test.txt', cb2]);
-            // testi(fs.moveFile,['_test_multi.txt', '__test__/_test_multi.txt', cb2]);
-            // testi(fs.deleteFile,['__test__/_test_bin.txt', cb2]);
-            // testi(fs.deleteFile,['__test__', cb2]);
+            testi(fs.writeFile, ['_test.txt', '123中a文bc', 'utf-8', cb2]);
+            testi(fs.writeFileSync, ['_test_bin.txt', 'abc=', 'base64']);
+            testi(fs.readFileSync, ['_test.txt', 'utf-8']);
+            testi(fs.readFile, ['_test_bin.txt', 'base64', cb2]);
+            testi(fs.unstandard.listFile, ['.', cb2]);
+            testi(fs.readdirSync, ['.']);
+            testi(fs.readdir, ['.', { withFileTypes: true }, cb2]);
+            testi(fs.unstandard.writeMultiFiles, [['_test_bin.txt', '_test_multi.txt'], ['abc=', 'abe='], 'base64', cb2]);
+            testi(fs.mkdir, ['__test__', cb2]);
+            testi(fs.mkdirSync, ['__test__2']);
+            testi(fs.rename, ['_test_bin.txt', '__test__/_test_bin.txt', cb2]);
+            // testi(fs.renameSync, ['__test__2', '__test__/dir']);
+            testi(fs.rename, ['_test.txt', '__test__/_test.txt', cb2]);
+            testi(fs.renameSync, ['_test_multi.txt', '__test__/_test_multi.txt']);
+            testi(fs.unlinkSync, ['__test__/_test_bin.txt']);
+            // testi(fs.rmdir, ['__test__', cb2]);
 
         }
     </script>
