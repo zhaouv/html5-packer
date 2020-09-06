@@ -39,6 +39,8 @@
             testi(fs.unlinkSync, ['__test__/_test_bin.txt']);
             testi(fs.rmdir, ['__test__', cb2]);
 
+            testi(()=>{fs.promises.readFile('LICENSE','utf8').then(v=>console.log(v))}, []);
+            testi(()=>{(async ()=>{let file = await fs.promises.readFile('README.md','utf8');console.log(file);})();}, []);
         }
     </script>
 </body>

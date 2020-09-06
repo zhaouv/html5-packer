@@ -86,6 +86,14 @@ fs.unlinkSync
 fs.rmdir
 fs.rmdirSync
 
+fs.promises.readFile
+fs.promises.writeFile
+fs.promises.readdir
+fs.promises.mkdir
+fs.promises.rename
+fs.promises.unlink
+fs.promises.rmdir
+
 fs.unstandard.encode64
 fs.unstandard.decode64
 fs.unstandard.writeMultiFiles   // 类似writeFile, 但是一次写入多个文件
