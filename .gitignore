@@ -3,3 +3,4 @@ app.exe
 debug.exe
 loadenv.cmd
 .vscode
+app*.zip

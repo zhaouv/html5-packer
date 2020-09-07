@@ -10,15 +10,9 @@ python打包后体积太大,
 csharp windows自带运行时, 来作为server(用c做server也是可行的, 区别不大)  
 网页+js 能非常简洁的给出GUI界面
 
-
-
-> todo 如何不需要修改html直接把fs.js注入进去
-
 # Usage
 
-> 本节未完成,目前在主目录工作
-
-下载release或build后保留`app.exe lib/ app/`
+下载release或build后保留`app.exe config.ini lib/ app/`
 
 把单网页html5应用放在`./app`中 (默认入口是index.html)
 
@@ -51,8 +45,6 @@ buildapp
 
 **linux**
 
-> todo linux 分支的待完善
-
 [配置编译环境](linux_version.md)
 
 ```
@@ -63,12 +55,10 @@ bash buildapp.cmd
  
 提供fs.js  
 仿照nodejs的api提供一些函数  
-暂时不以require('fs')来提供fs, 而是直接作为全局变量  
+暂时不以`require('fs')`来提供fs, 而是直接作为全局变量  
 借助 XMLHttpRequest 实现  
 
-> 准备提供的函数 未做完
-
-网页没有Buffer类, 直接以字符串作为结果
+> 网页没有Buffer类, 直接以字符串作为结果
 
 ```js
 fs.readFile         // 内容 encoding 仅支持 utf8 和 base64, 文件名 encoding 不允许调整, 下略
