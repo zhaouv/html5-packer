@@ -36,6 +36,8 @@ namespace _prog1
             string url = "http://127.0.0.1:" + port + "/";
             string platform = getPlatform();
 
+            config.load("config.ini");
+
             if (checkChrome())
             {
                 string chrome_exe = "chrome.exe";
@@ -43,50 +45,59 @@ namespace _prog1
                 {
                     chrome_exe = "google-chrome-stable";
                 }
-                
-                Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>window.resizeTo(800,600);window.location='" + url + "app/index.html';</script></body></html>\"");
-                
-                fsRoute.BasePath = ".";
-                fsRoute.delayExit(3*60*1000); // close if no connecting in 3 min
-                HttpServer httpServer = new HttpServer(port, new List<Route>()
-                {
-                    new Route()
-                    {
-                        Callable = new FileSystemRouteHandler() {BasePath = ".", ShowDirectories = true}.Handle,
-                        UrlRegex = "^/(.*)$",
-                        Method = "GET"
-                    },
-                    new Route()
-                    {
-                        Callable = fsRoute.route,
-                        UrlRegex = "^/(.*)$",
-                        Method = "POST"
-                    },
-                });
-                Thread thread = new Thread(new ThreadStart(httpServer.Listen));
-                thread.Start();
 
-                Console.WriteLine("已启动服务："+url);
-                Console.WriteLine("当前目录："+Path.GetFileName(Directory.GetCurrentDirectory()));
+                string sizeString = "window.resizeTo(" + config.WindowSize + ");";
+                if (config.WindowSize == "")
+                {
+                    sizeString = "";
+                }
+                
+                Process.Start(chrome_exe, "--app=\"data:text/html,<html><body><script>" + sizeString + "window.location='" + url + config.Entrance + "';</script></body></html>\"");
+                
+                
             } 
             else 
             {
-                MessageBox.Show("需要安装Chrome浏览器", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                MessageBox.Show("现在尝试启动默认浏览器", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                // MessageBox.Show("需要安装Chrome浏览器", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("未检测到Chrome, 现在尝试启动默认浏览器", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 if (platform == "Windows")
                 {
-                    Process.Start("https://www.google.com");
+                    Process.Start(url + config.Entrance);
                 }
                 else if (platform == "Linux")
                 {
-                    Process.Start("xdg-open", "https://www.google.com");
+                    Process.Start("xdg-open", url + config.Entrance);
                 }
                 // TODO
                 else {
-                    MessageBox.Show("TODO: Mac?", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("TODO: Mac???", "警告", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 
             }
+
+            fsRoute.BasePath = config.BasePath;
+            fsRoute.delayExit(3*60*1000); // close if no connecting in 3 min
+            HttpServer httpServer = new HttpServer(port, new List<Route>()
+            {
+                new Route()
+                {
+                    Callable = new FileSystemRouteHandler() {BasePath = config.BasePath, ShowDirectories = true}.Handle,
+                    UrlRegex = "^/(.*)$",
+                    Method = "GET"
+                },
+                new Route()
+                {
+                    Callable = fsRoute.route,
+                    UrlRegex = "^/(.*)$",
+                    Method = "POST"
+                },
+            });
+            Thread thread = new Thread(new ThreadStart(httpServer.Listen));
+            thread.Start();
+
+            Console.WriteLine("已启动服务："+url);
+            Console.WriteLine("当前目录："+Path.GetFileName(Directory.GetCurrentDirectory()));
+            
         }
         
 

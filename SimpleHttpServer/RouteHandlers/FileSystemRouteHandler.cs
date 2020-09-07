@@ -52,6 +52,13 @@ namespace SimpleHttpServer.RouteHandlers
                     url_part = "." + url_part;
                 }
             }
+            // add index.html
+            if (url_part.Length > 0) {
+                var last_char = url_part.ElementAt(url_part.Length - 1);
+                if (last_char == '/' || last_char == '\\') {
+                    url_part = url_part + "index.html";
+                }
+            }
             var local_path = Path.Combine(this.BasePath, url_part);
                 
             if (ShowDirectories && Directory.Exists(local_path)) {
