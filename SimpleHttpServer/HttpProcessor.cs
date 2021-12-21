@@ -155,6 +155,8 @@ namespace SimpleHttpServer
                 return route.Callable(request);
             } catch(Exception) {
                 // log.Error(ex);
+                // Console.WriteLine("here1");
+                // Console.WriteLine(request);
                 return HttpBuilder.InternalServerError();
             }
 
@@ -165,7 +167,10 @@ namespace SimpleHttpServer
             //Read Request Line
             string request = Readline(inputStream);
 
-            string[] tokens = request.Split(' ');
+            // string[] tokens = request.Split(' ');
+            // Console.WriteLine("here0");
+            // Console.WriteLine("request："+request);
+            string[] tokens = Regex.Split(request," ",RegexOptions.IgnoreCase);
             if (tokens.Length != 3)
             {
                 throw new Exception("invalid http request line");

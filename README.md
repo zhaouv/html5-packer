@@ -34,6 +34,12 @@ Linux: mono app.exe（[需要安装mono全家桶](linux_version.md)）
 
 # Build
 
+**docker(推荐)**
+
+```sh
+sudo docker run --rm -it -v $(pwd):/w mono:6.12.0.122 bash -c 'cd /w&&bash builddebug.cmd&&bash buildapp.cmd'
+```
+
 **win**
 
 复制loadenv`copy _loadenv.cmd loadenv.cmd`后根据 Microsoft Visual Studio 的版本修改

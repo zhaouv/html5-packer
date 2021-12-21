@@ -21,14 +21,16 @@ namespace SimpleHttpServer.RouteHandlers
             string name = Path.GetDirectoryName(filename);
             if (name == null) return false;
             var real_filename = Path.GetFileName(filename);
-            // 只允许数字、字母和标点
-            if (!real_filename.All(c => char.IsLetterOrDigit(c) || "`~!@#$%^&*()-_=+;,.".Contains(c))) return false;
+            // // 只允许数字、字母和标点
+            // if (!real_filename.All(c => char.IsLetterOrDigit(c) || "`~!@#$%^&*()-_=+;,.".Contains(c))) return false;
 
             var files = Directory.GetFiles(name);
             return Array.Exists(files, s => Path.GetFileName(s) == real_filename);
         }
 
         public HttpResponse Handle(HttpRequest request) {
+            // Console.WriteLine("here2");
+            // Console.WriteLine(request);
             var url_part = request.Path;
 
             // do some basic sanitization of the URL, attempting to make sure they can't read files outside the basepath

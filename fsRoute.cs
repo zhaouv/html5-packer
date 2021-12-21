@@ -7,6 +7,8 @@ using SimpleHttpServer.Models;
 
 using System.Threading.Tasks;
 
+using System.Text.RegularExpressions;
+
 namespace _prog1
 {
     class fsRoute
@@ -27,7 +29,8 @@ namespace _prog1
         public static HttpResponse route(HttpRequest request)
         {
             // Console.WriteLine(request.Content);
-            string[] strings = request.Content.Split('&');
+            // string[] strings = request.Content.Split('&');
+            string[] strings = Regex.Split(request.Content,"&",RegexOptions.IgnoreCase);
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
             foreach (string s in strings)
             {
@@ -132,7 +135,9 @@ namespace _prog1
         {
             string filename = dictionary["name"], content = dictionary["value"];
 
-            string[] filenames = filename.Split(';'), contents = content.Split(';');
+
+            // string[] filenames = filename.Split(';'), contents = content.Split(';');
+            string[] filenames = Regex.Split(filename,";",RegexOptions.IgnoreCase), contents = Regex.Split(content,";",RegexOptions.IgnoreCase);
             long length = 0;
             for (int i = 0; i < filenames.Length; ++i)
             {
